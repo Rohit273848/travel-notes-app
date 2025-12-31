@@ -23,7 +23,7 @@ const SearchPage = () => {
       setSummary("");
 
       const res = await fetch(
-        "http://travel-notes-app.onrender.com/api/notes/ai-summary",
+        "https://travel-notes-app.onrender.com/api/notes/ai-summary",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -49,7 +49,7 @@ const SearchPage = () => {
       setLoading(true);
       setHasSearched(true);
       const res = await fetch(
-        `http://travel-notes-app.onrender.com/api/notes/search?place=${query}`
+        `https://travel-notes-app.onrender.com/api/notes/search?place=${query}`
       );
       const data = await res.json();
       setResults(Array.isArray(data) ? data : []);
