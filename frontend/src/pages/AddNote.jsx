@@ -16,7 +16,7 @@ const AddNote = () => {
     };
   
     try {
-      const res = await fetch("http://travel-notes-app.onrender.com/api/notes", {
+      const res = await fetch("https://travel-notes-app.onrender.com/api/notes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
