@@ -8,7 +8,7 @@ const PublicNotes = () => {
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/notes/public");
+        const res = await fetch("http://travel-notes-app.onrender.com/api/notes/public");
         const data = await res.json();
         if (Array.isArray(data)) {
             setNotes(data);
