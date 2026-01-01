@@ -14,7 +14,7 @@ console.log("OPENAI KEY LOADED:", !!process.env.OPENAI_API_KEY);
 // --------------------
 // ADD NOTE
 // --------------------
-router.post("/", async (req, res) => {
+router.post("/", authMiddleware, async (req, res) => {
   try {
     const newNote = new Note({
       ...req.body,
