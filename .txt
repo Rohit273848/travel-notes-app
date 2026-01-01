@@ -32,3 +32,13 @@ Personal dashboard
 | 6    | Frontend auth pages        | ⏳      |
 | 7    | Store token (localStorage) | ⏳      |
 | 8    | My Notes page              | ⏳      |
+
+
+🎯 WHAT WE BUILD IN THIS STEP (ONLY THIS)
+Login page UI
+Connect to /api/auth/login
+Save token in localStorage
+Redirect after login
+⚠️ No signup page yet (next step).
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTU2Yjg5ZTczNDIzMzY5YTkyNzllMDYiLCJpYXQiOjE3NjcyOTI2NDAsImV4cCI6MTc2Nzg5NzQ0MH0.fnBKwgbkQPTdLxeR80SFplbp3OKhtd_jqOThHR8jT4U
