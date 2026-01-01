@@ -1,9 +1,34 @@
 import { MapPin, Search, BookOpen, Globe, Lock, Sparkles, TrendingUp, ThumbsUp, User, Brain } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 
 const Home = () => {
+    const [latestNotes, setLatestNotes] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchLatestNotes = async () => {
+            try {
+                const res = await fetch(
+                    "https://travel-notes-app.onrender.com/api/notes/public"
+                );
+                const data = await res.json();
+
+                setLatestNotes(Array.isArray(data) ? data.slice(0, 6) : []);
+            } catch (error) {
+                console.error("Home fetch error:", error);
+                setLatestNotes([]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchLatestNotes();
+    }, []);
+
     return (
+
         <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
             {/* Hero Section */}
             <section className="relative overflow-hidden">
@@ -42,7 +67,6 @@ const Home = () => {
                             Add Place Note
                         </Link>
 
-
                         <Link
                             to="/search"
                             className="group inline-flex items-center justify-center gap-3 bg-white text-gray-900 px-8 py-4 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl border-2 border-gray-200 hover:border-indigo-300 transform hover:-translate-y-1 transition-all duration-200"
@@ -67,6 +91,46 @@ const Home = () => {
                             <div className="text-3xl font-bold text-gray-900">Fast</div>
                             <div className="text-sm text-gray-600">Results</div>
                         </div>
+                    </div>
+                </div>
+            </section>
+            {/* Latest Public Places */}
+            <section className="py-20 bg-white">
+                <div className="max-w-7xl mx-auto px-6">
+                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-10 text-center">
+                        Latest Places
+                    </h2>
+
+                    {loading && (
+                        <p className="text-center text-gray-500">Loading places...</p>
+                    )}
+
+                    {!loading && latestNotes.length === 0 && (
+                        <p className="text-center text-gray-500">
+                            No public places yet. Be the first to add one!
+                        </p>
+                    )}
+
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {latestNotes.map((note) => (
+                            <Link
+                                key={note._id}
+                                to={`/search?place=${note.placeName}`}
+                                className="group bg-slate-50 p-6 rounded-2xl border hover:shadow-lg transition"
+                            >
+                                <h3 className="text-xl font-semibold text-gray-900 group-hover:text-indigo-600 transition">
+                                    {note.placeName}
+                                </h3>
+
+                                <p className="text-gray-600 mt-2 line-clamp-3">
+                                    {note.noteText || note.details}
+                                </p>
+
+                                <span className="inline-block mt-4 text-sm text-indigo-600 font-medium">
+                                    View details →
+                                </span>
+                            </Link>
+                        ))}
                     </div>
                 </div>
             </section>
