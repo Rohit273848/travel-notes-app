@@ -13,6 +13,7 @@ import {
   BookOpen,
   User,
   Sparkles,
+  Globe,
 } from "lucide-react";
 
 const Navbar = () => {
@@ -59,6 +60,15 @@ const Navbar = () => {
               <Link to="/" className="flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:text-indigo-700 transition-all duration-200 group">
                 <Home className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
                 Home
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/public-notes"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:text-indigo-700 transition-all duration-200 group"
+              >
+                <Globe className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
+                Public Notes
               </Link>
             </li>
 
@@ -162,6 +172,16 @@ const Navbar = () => {
                 <Link to="/" onClick={() => setMobileMenuOpen(false)} className="w-full flex items-center gap-3 px-4 py-3.5 rounded-xl font-medium text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:text-indigo-700 transition-all duration-200">
                   <Home className="w-5 h-5" />
                   Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/public-notes"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full flex items-center gap-3 px-4 py-3.5 rounded-xl font-medium text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:text-indigo-700 transition-all duration-200"
+                >
+                  <Globe className="w-5 h-5" />
+                  Public Notes
                 </Link>
               </li>
 
