@@ -132,5 +132,46 @@ router.get("/my-notes", authMiddleware, async (req, res) => {
   }
 });
 
+// --------------------
+// UPDATE NOTE (Protected)
+// --------------------
+router.put("/:id", authMiddleware, async (req, res) => {
+  try {
+    const note = await Note.findOneAndUpdate(
+      { _id: req.params.id, user: req.userId }, // ownership check
+      req.body,
+      { new: true }
+    );
+
+    if (!note) {
+      return res.status(404).json({ message: "Note not found" });
+    }
+
+    res.json(note);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to update note" });
+  }
+});
+
+// --------------------
+// DELETE NOTE (Protected)
+// --------------------
+router.delete("/:id", authMiddleware, async (req, res) => {
+  try {
+    const note = await Note.findOneAndDelete({
+      _id: req.params.id,
+      user: req.userId, // ownership check
+    });
+
+    if (!note) {
+      return res.status(404).json({ message: "Note not found" });
+    }
+
+    res.json({ message: "Note deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to delete note" });
+  }
+});
+
 
 export default router;

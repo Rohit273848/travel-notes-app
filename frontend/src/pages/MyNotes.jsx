@@ -40,6 +40,45 @@ const MyNotes = () => {
     fetchMyNotes();
   }, [navigate]);
 
+  // ✅ EDIT NOTE (navigate to edit page)
+  const handleEdit = (note) => {
+    navigate(`/edit-note/${note._id}`, { state: note });
+  };
+
+  // ✅ DELETE NOTE
+  const handleDelete = async (noteId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this note?"
+    );
+
+    if (!confirmDelete) return;
+
+    const token = localStorage.getItem("token");
+
+    try {
+      const res = await fetch(
+        `https://travel-notes-app.onrender.com/api/notes/${noteId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!res.ok) {
+        alert("Failed to delete note");
+        return;
+      }
+
+      // ✅ Update UI instantly
+      setNotes((prev) => prev.filter((note) => note._id !== noteId));
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong");
+    }
+  };
+
   if (loading) {
     return <p className="p-6 text-center">Loading your notes...</p>;
   }
@@ -61,9 +100,26 @@ const MyNotes = () => {
                 <MapPin className="w-4 h-4 text-blue-600" />
                 <h2 className="font-bold text-lg">{note.placeName}</h2>
               </div>
+
               <p className="text-gray-700 whitespace-pre-line">
                 {note.noteText}
               </p>
+
+              <div className="flex gap-3 mt-4">
+                <button
+                  onClick={() => handleEdit(note)}
+                  className="px-4 py-2 text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700"
+                >
+                  Edit
+                </button>
+
+                <button
+                  onClick={() => handleDelete(note._id)}
+                  className="px-4 py-2 text-sm rounded-lg bg-red-600 text-white hover:bg-red-700"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           ))}
         </div>

@@ -1,30 +1,17 @@
+3️⃣ Edit & Delete Notes
+Edit your note
+Delete your note
+Full CRUD (very important for product)
 
+4️⃣ Logout Polish
+Clear token
+Redirect to login
+Navbar auto updates
+No stale state
 
 🔜 Step 2: Improve AI output
-
 Better summaries
-
 Categories (Food, Travel, Stay)
-
-🔜 Step 3: Home page polish
-
-Trending places
-
-Latest notes
-
-🚀 NEXT BIG FEATURES (YOU CHOOSE)
-
-Reply with ONE NUMBER ONLY:
-
-1️⃣ Protect “Add Note” Page
-If not logged in → redirect to /login
-Prevent anonymous posting
-Real product behavior
-
-2️⃣ “My Notes” Page (Personal Dashboard)
-Show only logged-in user notes
-Edit / delete notes
-Core feature for users
 
 3️⃣ Trending Places (🔥)
 Activity-based
@@ -37,4 +24,4 @@ Error handling
 Empty states
 UX improvements
 
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTU2Yjg5ZTczNDIzMzY5YTkyNzllMDYiLCJpYXQiOjE3NjcyOTI2NDAsImV4cCI6MTc2Nzg5NzQ0MH0.fnBKwgbkQPTdLxeR80SFplbp3OKhtd_jqOThHR8jT4U
+
