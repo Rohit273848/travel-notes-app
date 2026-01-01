@@ -2,8 +2,9 @@ import dotenv from "dotenv";
 dotenv.config(); // ✅ MUST be first thing executed
 
 import express from "express";
-import Note from "../models/Note.js";
 import OpenAI from "openai";
+import authMiddleware from "../middleware/authMiddleware.js";
+import Note from "../models/Note.js";
 
 const router = express.Router();
 
@@ -15,7 +16,11 @@ console.log("OPENAI KEY LOADED:", !!process.env.OPENAI_API_KEY);
 // --------------------
 router.post("/", async (req, res) => {
   try {
-    const newNote = new Note(req.body);
+    const newNote = new Note({
+      ...req.body,
+      user: req.userId || null,
+    });
+
     const savedNote = await newNote.save();
     res.status(201).json(savedNote);
   } catch (error) {
@@ -112,5 +117,20 @@ router.post("/ai-summary", async (req, res) => {
     res.status(500).json({ message: "AI summary failed" });
   }
 });
+
+// GET: My Notes (Protected)
+router.get("/my-notes", authMiddleware, async (req, res) => {
+  try {
+    const notes = await Note.find({ user: req.userId }).sort({
+      createdAt: -1,
+    });
+
+    res.json(notes);
+  } catch (error) {
+    console.error("My notes error:", error);
+    res.status(500).json({ message: "Failed to fetch notes" });
+  }
+});
+
 
 export default router;
