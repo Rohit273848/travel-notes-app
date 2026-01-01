@@ -12,28 +12,32 @@ const AddNote = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const noteData = {
       placeName,
       noteText: details,
       isPublic: visibility === "public",
     };
-  
+
     try {
+      const token = localStorage.getItem("token");
+
       const res = await fetch("https://travel-notes-app.onrender.com/api/notes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // 🔥 THIS LINE FIXES IT
         },
         body: JSON.stringify(noteData),
       });
-  
+
+
       if (!res.ok) {
         throw new Error("Failed to save note");
       }
-  
+
       alert("✅ Note saved successfully");
-  
+
       // Clear form
       setPlaceName("");
       setDetails("");
@@ -43,17 +47,17 @@ const AddNote = () => {
       alert("❌ Error saving note");
     }
   };
-  
+
   const navigate = useNavigate();
 
-useEffect(() => {
-  const token = localStorage.getItem("token");
+  useEffect(() => {
+    const token = localStorage.getItem("token");
 
-  if (!token) {
-    alert("Please login to add a note");
-    navigate("/login");
-  }
-}, [navigate]);
+    if (!token) {
+      alert("Please login to add a note");
+      navigate("/login");
+    }
+  }, [navigate]);
 
 
   return (
@@ -116,11 +120,10 @@ useEffect(() => {
                 </label>
                 <div className="grid grid-cols-2 gap-4">
                   <label
-                    className={`relative flex items-center justify-center gap-3 px-5 py-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
-                      visibility === "public"
+                    className={`relative flex items-center justify-center gap-3 px-5 py-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${visibility === "public"
                         ? "border-indigo-500 bg-indigo-50 shadow-sm"
                         : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50"
-                    }`}
+                      }`}
                   >
                     <input
                       type="radio"
@@ -130,18 +133,16 @@ useEffect(() => {
                       className="sr-only"
                     />
                     <Eye
-                      className={`w-5 h-5 ${
-                        visibility === "public"
+                      className={`w-5 h-5 ${visibility === "public"
                           ? "text-indigo-600"
                           : "text-gray-400"
-                      }`}
+                        }`}
                     />
                     <span
-                      className={`font-medium ${
-                        visibility === "public"
+                      className={`font-medium ${visibility === "public"
                           ? "text-indigo-900"
                           : "text-gray-700"
-                      }`}
+                        }`}
                     >
                       Public
                     </span>
@@ -151,11 +152,10 @@ useEffect(() => {
                   </label>
 
                   <label
-                    className={`relative flex items-center justify-center gap-3 px-5 py-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
-                      visibility === "personal"
+                    className={`relative flex items-center justify-center gap-3 px-5 py-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${visibility === "personal"
                         ? "border-indigo-500 bg-indigo-50 shadow-sm"
                         : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50"
-                    }`}
+                      }`}
                   >
                     <input
                       type="radio"
@@ -165,18 +165,16 @@ useEffect(() => {
                       className="sr-only"
                     />
                     <Lock
-                      className={`w-5 h-5 ${
-                        visibility === "personal"
+                      className={`w-5 h-5 ${visibility === "personal"
                           ? "text-indigo-600"
                           : "text-gray-400"
-                      }`}
+                        }`}
                     />
                     <span
-                      className={`font-medium ${
-                        visibility === "personal"
+                      className={`font-medium ${visibility === "personal"
                           ? "text-indigo-900"
                           : "text-gray-700"
-                      }`}
+                        }`}
                     >
                       Personal
                     </span>
