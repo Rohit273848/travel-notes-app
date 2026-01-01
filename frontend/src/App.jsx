@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import SearchPage from "./pages/Search";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import MyNotes from "./pages/MyNotes";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/search" element={<SearchPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/my-notes" element={<MyNotes />} />
 
 
       </Routes>

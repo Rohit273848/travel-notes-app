@@ -1,6 +1,17 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { MapPin, Home, Plus, Search, Menu, X, LogIn, UserPlus, LogOut } from "lucide-react";
+import {
+  MapPin,
+  Home,
+  Plus,
+  Search,
+  Menu,
+  X,
+  LogIn,
+  UserPlus,
+  LogOut,
+  BookOpen,
+} from "lucide-react";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -20,7 +31,6 @@ const Navbar = () => {
     <nav className="w-full bg-white border-b border-gray-200 sticky top-0 z-50 backdrop-blur-lg bg-opacity-90">
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
-
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
             <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200 shadow-lg">
@@ -43,6 +53,14 @@ const Navbar = () => {
                 <Home className="w-4 h-4" /> Home
               </Link>
             </li>
+
+            {token && (
+              <li>
+                <Link to="/my-notes" className="nav-link">
+                  <BookOpen className="w-4 h-4" /> My Notes
+                </Link>
+              </li>
+            )}
 
             <li>
               <Link to="/add-note" className="nav-link">
@@ -96,24 +114,55 @@ const Navbar = () => {
         {mobileMenuOpen && (
           <div className="sm:hidden mt-4 pt-4 border-t">
             <ul className="flex flex-col gap-2">
-              <Link to="/" onClick={() => setMobileMenuOpen(false)} className="mobile-link">
+              <Link
+                to="/"
+                onClick={() => setMobileMenuOpen(false)}
+                className="mobile-link"
+              >
                 <Home /> Home
               </Link>
 
-              <Link to="/add-note" onClick={() => setMobileMenuOpen(false)} className="mobile-link">
+              {token && (
+                <Link
+                  to="/my-notes"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="mobile-link"
+                >
+                  <BookOpen /> My Notes
+                </Link>
+              )}
+
+              <Link
+                to="/add-note"
+                onClick={() => setMobileMenuOpen(false)}
+                className="mobile-link"
+              >
                 <Plus /> Add Note
               </Link>
 
-              <Link to="/search" onClick={() => setMobileMenuOpen(false)} className="mobile-primary">
+              <Link
+                to="/search"
+                onClick={() => setMobileMenuOpen(false)}
+                className="mobile-primary"
+              >
                 <Search /> Search
               </Link>
 
               {!token ? (
                 <>
-                  <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="mobile-link">
+                  <Link
+                    to="/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="mobile-link"
+                  >
                     <LogIn /> Login
                   </Link>
-                  <Link to="/signup" onClick={() => setMobileMenuOpen(false)} className="mobile-primary">
+
+                  <Link
+                    to="/signup"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="mobile-primary"
+                  >
                     <UserPlus /> Sign Up
                   </Link>
                 </>
