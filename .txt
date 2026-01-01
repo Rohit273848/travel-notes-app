@@ -22,20 +22,13 @@ Personal dashboard
 
 🚀 WHERE DO YOU WANT TO GO NEXT?
 
-Pick ONE and we’ll move step-by-step again (same beginner-friendly style):
-
-Option 3️⃣ – Authentication
-
-Login / Signup
-
-Personal vs Public notes (proper user-based)
-
-JWT (explained simply)
-
-Option 4️⃣ – Presentation & PPT
-
-How to explain this project to non-tech people
-
-Clean slides content (no AI-looking text)
-
-Architecture diagram explanation
+| Step | Task                       | Status |
+| ---- | -------------------------- | ------ |
+| 1    | Create User model          | ⏳ NOW  |
+| 2    | Signup API                 | ⏳      |
+| 3    | Login API (JWT)            | ⏳      |
+| 4    | Auth middleware            | ⏳      |
+| 5    | Protect personal notes     | ⏳      |
+| 6    | Frontend auth pages        | ⏳      |
+| 7    | Store token (localStorage) | ⏳      |
+| 8    | My Notes page              | ⏳      |
