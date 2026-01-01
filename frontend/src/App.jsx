@@ -5,6 +5,7 @@ import PublicNotes from "./pages/PublicNotes";
 import Home from "./pages/Home";
 import SearchPage from "./pages/Search";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 
 function App() {
@@ -18,6 +19,8 @@ function App() {
         <Route path="/public-notes" element={<PublicNotes />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+
 
       </Routes>
     </>
