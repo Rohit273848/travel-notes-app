@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { MapPin, FileText, Eye, Lock } from "lucide-react";
 
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+
 const AddNote = () => {
   const [placeName, setPlaceName] = useState("");
   const [details, setDetails] = useState("");
@@ -40,6 +44,17 @@ const AddNote = () => {
     }
   };
   
+  const navigate = useNavigate();
+
+useEffect(() => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    alert("Please login to add a note");
+    navigate("/login");
+  }
+}, [navigate]);
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center px-4 py-12">

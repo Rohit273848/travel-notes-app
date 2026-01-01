@@ -12,33 +12,29 @@ Trending places
 
 Latest notes
 
-🔜 Step 4: Auth (optional but powerful)
+🚀 NEXT BIG FEATURES (YOU CHOOSE)
 
-Login / Signup
+Reply with ONE NUMBER ONLY:
 
-Personal dashboard
+1️⃣ Protect “Add Note” Page
+If not logged in → redirect to /login
+Prevent anonymous posting
+Real product behavior
 
+2️⃣ “My Notes” Page (Personal Dashboard)
+Show only logged-in user notes
+Edit / delete notes
+Core feature for users
 
+3️⃣ Trending Places (🔥)
+Activity-based
+No AI cost
+Looks advanced & smart
 
-🚀 WHERE DO YOU WANT TO GO NEXT?
-
-| Step | Task                       | Status |
-| ---- | -------------------------- | ------ |
-| 1    | Create User model          | ⏳ NOW  |
-| 2    | Signup API                 | ⏳      |
-| 3    | Login API (JWT)            | ⏳      |
-| 4    | Auth middleware            | ⏳      |
-| 5    | Protect personal notes     | ⏳      |
-| 6    | Frontend auth pages        | ⏳      |
-| 7    | Store token (localStorage) | ⏳      |
-| 8    | My Notes page              | ⏳      |
-
-
-🎯 WHAT WE BUILD IN THIS STEP (ONLY THIS)
-Login page UI
-Connect to /api/auth/login
-Save token in localStorage
-Redirect after login
-⚠️ No signup page yet (next step).
+4️⃣ Final Product Polish
+Loading skeletons
+Error handling
+Empty states
+UX improvements
 
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTU2Yjg5ZTczNDIzMzY5YTkyNzllMDYiLCJpYXQiOjE3NjcyOTI2NDAsImV4cCI6MTc2Nzg5NzQ0MH0.fnBKwgbkQPTdLxeR80SFplbp3OKhtd_jqOThHR8jT4U
