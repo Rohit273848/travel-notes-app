@@ -1,7 +1,7 @@
-3️⃣ Edit & Delete Notes
-Edit your note
-Delete your note
-Full CRUD (very important for product)
+1️⃣ I want React autocomplete code
+2️⃣ I want OpenStreetMap implementation
+3️⃣ I want Google Maps implementation
+4️⃣ I want AI + location intelligence ideas
 
 4️⃣ Logout Polish
 Clear token
@@ -23,5 +23,6 @@ Loading skeletons
 Error handling
 Empty states
 UX improvements
+
 
 

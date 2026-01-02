@@ -3,18 +3,21 @@ import { MapPin, FileText, Eye, Lock } from "lucide-react";
 
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import PlaceAutocomplete from "../components/PlaceAutocomplete";
 
 
 const AddNote = () => {
   const [placeName, setPlaceName] = useState("");
   const [details, setDetails] = useState("");
   const [visibility, setVisibility] = useState("public");
+  const [place, setPlace] = useState(null);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const noteData = {
-      placeName,
+      place,
       noteText: details,
       isPublic: visibility === "public",
     };
@@ -60,6 +63,7 @@ const AddNote = () => {
   }, [navigate]);
 
 
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-2xl">
@@ -86,14 +90,13 @@ const AddNote = () => {
                   <MapPin className="w-4 h-4 text-indigo-500" />
                   Place Name
                 </label>
-                <input
-                  type="text"
-                  value={placeName}
-                  onChange={(e) => setPlaceName(e.target.value)}
-                  placeholder="e.g. Goa, Manali, Paris"
-                  required
-                  className="w-full px-4 py-3.5 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 transition-all duration-200 focus:outline-none focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
+                <PlaceAutocomplete
+                  onSelect={(selectedPlace) => {
+                    setPlace(selectedPlace);
+                    setPlaceName(selectedPlace.name);
+                  }}
                 />
+
               </div>
 
               {/* Details */}
@@ -121,8 +124,8 @@ const AddNote = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <label
                     className={`relative flex items-center justify-center gap-3 px-5 py-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${visibility === "public"
-                        ? "border-indigo-500 bg-indigo-50 shadow-sm"
-                        : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50"
+                      ? "border-indigo-500 bg-indigo-50 shadow-sm"
+                      : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50"
                       }`}
                   >
                     <input
@@ -134,14 +137,14 @@ const AddNote = () => {
                     />
                     <Eye
                       className={`w-5 h-5 ${visibility === "public"
-                          ? "text-indigo-600"
-                          : "text-gray-400"
+                        ? "text-indigo-600"
+                        : "text-gray-400"
                         }`}
                     />
                     <span
                       className={`font-medium ${visibility === "public"
-                          ? "text-indigo-900"
-                          : "text-gray-700"
+                        ? "text-indigo-900"
+                        : "text-gray-700"
                         }`}
                     >
                       Public
@@ -153,8 +156,8 @@ const AddNote = () => {
 
                   <label
                     className={`relative flex items-center justify-center gap-3 px-5 py-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${visibility === "personal"
-                        ? "border-indigo-500 bg-indigo-50 shadow-sm"
-                        : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50"
+                      ? "border-indigo-500 bg-indigo-50 shadow-sm"
+                      : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50"
                       }`}
                   >
                     <input
@@ -166,14 +169,14 @@ const AddNote = () => {
                     />
                     <Lock
                       className={`w-5 h-5 ${visibility === "personal"
-                          ? "text-indigo-600"
-                          : "text-gray-400"
+                        ? "text-indigo-600"
+                        : "text-gray-400"
                         }`}
                     />
                     <span
                       className={`font-medium ${visibility === "personal"
-                          ? "text-indigo-900"
-                          : "text-gray-700"
+                        ? "text-indigo-900"
+                        : "text-gray-700"
                         }`}
                     >
                       Personal
