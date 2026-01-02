@@ -36,7 +36,7 @@ router.get("/public", async (req, res) => {
     const allNotes = await Note.find().sort({ createdAt: -1 });
 
     const publicNotes = allNotes.filter(
-      (note) => note.isPublic === true || note.visibility === "public"
+       (note) => note.basicInfo?.visibility === "public"
     );
 
     res.status(200).json(publicNotes);
@@ -58,9 +58,10 @@ router.get("/search", async (req, res) => {
     }
 
     const notes = await Note.find({
-      placeName: { $regex: place, $options: "i" },
-      isPublic: true,
+      "basicInfo.place.name": { $regex: place, $options: "i" },
+      "basicInfo.visibility": "public",
     }).sort({ createdAt: -1 });
+    
 
     res.status(200).json(notes);
   } catch (error) {
@@ -85,9 +86,10 @@ router.post("/ai-summary", async (req, res) => {
     }
 
     const notes = await Note.find({
-      placeName: { $regex: place, $options: "i" },
-      isPublic: true,
+      "basicInfo.place.name": { $regex: place, $options: "i" },
+      "basicInfo.visibility": "public",
     });
+    
 
     if (notes.length === 0) {
       return res.json({ summary: "No notes available for this place." });
