@@ -14,6 +14,14 @@ const AddNote = () => {
     visibility: "public",
     rating: 3,
   });
+  const [travelDetails, setTravelDetails] = useState({
+    mode: "",
+    trainOrBusNumber: "",
+    from: "",
+    to: "",
+    duration: "",
+    approxCost: "",
+  });
 
   /* 🔐 AUTH CHECK */
   useEffect(() => {
@@ -35,8 +43,10 @@ const AddNote = () => {
 
     const noteData = {
       basicInfo,
+      travelDetails,
       noteText: details,
     };
+    
 
     try {
       const token = localStorage.getItem("token");
@@ -153,6 +163,89 @@ const AddNote = () => {
             placeholder="Travel details, food, stay, tips..."
           />
         </div>
+
+        {/* 🅱️ Travel Details */}
+<div className="mt-8">
+  <h3 className="text-xl font-bold mb-4">Travel Details</h3>
+
+  {/* Mode of Travel */}
+  <select
+    value={travelDetails.mode}
+    onChange={(e) =>
+      setTravelDetails({ ...travelDetails, mode: e.target.value })
+    }
+    className="input mb-3"
+  >
+    <option value="">Select Mode of Travel</option>
+    <option value="train">Train</option>
+    <option value="bus">Bus</option>
+    <option value="car">Car</option>
+    <option value="bike">Bike</option>
+    <option value="flight">Flight</option>
+  </select>
+
+  {/* Train / Bus Number (conditional but simple for now) */}
+  <input
+    type="text"
+    placeholder="Train / Bus Number (optional)"
+    value={travelDetails.trainOrBusNumber}
+    onChange={(e) =>
+      setTravelDetails({
+        ...travelDetails,
+        trainOrBusNumber: e.target.value,
+      })
+    }
+    className="input mb-3"
+  />
+
+  {/* From */}
+  <input
+    type="text"
+    placeholder="From (Departure location)"
+    value={travelDetails.from}
+    onChange={(e) =>
+      setTravelDetails({ ...travelDetails, from: e.target.value })
+    }
+    className="input mb-3"
+  />
+
+  {/* To */}
+  <input
+    type="text"
+    placeholder="To (Arrival location)"
+    value={travelDetails.to}
+    onChange={(e) =>
+      setTravelDetails({ ...travelDetails, to: e.target.value })
+    }
+    className="input mb-3"
+  />
+
+  {/* Duration */}
+  <input
+    type="text"
+    placeholder="Travel Duration (e.g. 6 hours)"
+    value={travelDetails.duration}
+    onChange={(e) =>
+      setTravelDetails({ ...travelDetails, duration: e.target.value })
+    }
+    className="input mb-3"
+  />
+
+  {/* Approx Cost */}
+  <input
+    type="number"
+    placeholder="Approx Cost (₹)"
+    value={travelDetails.approxCost}
+    onChange={(e) =>
+      setTravelDetails({
+        ...travelDetails,
+        approxCost: e.target.value,
+      })
+    }
+    className="input"
+  />
+</div>
+
 
         <button
           type="submit"

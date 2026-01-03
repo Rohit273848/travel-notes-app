@@ -40,12 +40,15 @@ const noteSchema = new mongoose.Schema(
         type: String,
         enum: ["train", "bus", "car", "bike", "flight"],
       },
-      transportNumber: String,
-      departure: String,
-      arrival: String,
-      duration: String,
-      cost: Number,
-    },
+    
+      trainOrBusNumber: String,
+    
+      from: String,
+      to: String,
+    
+      duration: String, // e.g. "6 hours"
+      approxCost: Number,
+    },    
 
     stayDetails: {
       hotelName: String,
