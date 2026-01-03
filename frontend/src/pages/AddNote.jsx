@@ -59,16 +59,18 @@ const AddNote = () => {
   /* 🔹 3.6 UPDATE SUBMIT DATA */
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!basicInfo.place) {
       alert("Please select a place");
       return;
     }
-
+  
     const noteData = {
       basicInfo: {
-        placeName,
-        visibility,
+        place: basicInfo.place,          // FULL location object
+        visitType: basicInfo.visitType,
+        visibility: basicInfo.visibility,
+        rating: basicInfo.rating,
       },
       travelDetails,
       stayDetails,
@@ -76,13 +78,12 @@ const AddNote = () => {
       nearbyPlaces,
       warnings,
       personalExperience,
-      noteText: details,
+      noteText: details, // temporary (we’ll remove later)
     };
-    
-
+  
     try {
       const token = localStorage.getItem("token");
-
+  
       const res = await fetch(
         "https://travel-notes-app.onrender.com/api/notes",
         {
@@ -94,24 +95,44 @@ const AddNote = () => {
           body: JSON.stringify(noteData),
         }
       );
-
+  
       if (!res.ok) throw new Error("Failed to save note");
-
+  
       alert("✅ Note saved");
-
+  
       // reset
       setDetails("");
+      setPersonalExperience("");
       setBasicInfo({
         place: null,
         visitType: "visited",
         visibility: "public",
         rating: 3,
       });
+  
+      setTravelDetails({
+        mode: "",
+        trainOrBusNumber: "",
+        from: "",
+        to: "",
+        duration: "",
+        approxCost: "",
+      });
+  
+      setStayDetails({
+        hotelName: "",
+        priceRange: "",
+        bookingType: "",
+        cleanlinessRating: 3,
+        locationAdvantage: "",
+      });
+  
     } catch (err) {
       console.error(err);
       alert("❌ Error saving note");
     }
   };
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -346,6 +367,207 @@ const AddNote = () => {
             className="input"
           />
         </div>
+{/* 🅳 Food & Local Experience */}
+<div className="mt-10">
+  <h3 className="text-xl font-bold mb-4">Food & Local Experience</h3>
+
+  {/* Must Try Food (comma separated → array) */}
+  <input
+    type="text"
+    placeholder="Must-Try Food (comma separated)"
+    value={foodDetails.mustTryFood.join(", ")}
+    onChange={(e) =>
+      setFoodDetails({
+        ...foodDetails,
+        mustTryFood: e.target.value
+          .split(",")
+          .map((f) => f.trim())
+          .filter(Boolean),
+      })
+    }
+    className="input mb-3"
+  />
+
+  {/* Food Price Range */}
+  <input
+    type="text"
+    placeholder="Food Price Range (e.g. ₹50–₹200)"
+    value={foodDetails.foodPriceRange}
+    onChange={(e) =>
+      setFoodDetails({
+        ...foodDetails,
+        foodPriceRange: e.target.value,
+      })
+    }
+    className="input mb-3"
+  />
+
+  {/* Best Time To Eat */}
+  <input
+    type="text"
+    placeholder="Best Time To Eat (e.g. Morning / Evening)"
+    value={foodDetails.bestTimeToEat}
+    onChange={(e) =>
+      setFoodDetails({
+        ...foodDetails,
+        bestTimeToEat: e.target.value,
+      })
+    }
+    className="input mb-3"
+  />
+
+  {/* Local Special Dish */}
+  <input
+    type="text"
+    placeholder="Local Special Dish"
+    value={foodDetails.localSpecialDish}
+    onChange={(e) =>
+      setFoodDetails({
+        ...foodDetails,
+        localSpecialDish: e.target.value,
+      })
+    }
+    className="input"
+  />
+</div>
+{/* 🅴 Nearby Places / Attractions */}
+<div className="mt-10">
+  <h3 className="text-xl font-bold mb-4">Nearby Places / Attractions</h3>
+
+  {nearbyPlaces.map((place, index) => (
+    <div
+      key={index}
+      className="border rounded p-3 mb-4 space-y-2 bg-gray-50"
+    >
+      <input
+        type="text"
+        placeholder="Nearby Place Name"
+        value={place.name}
+        onChange={(e) => {
+          const updated = [...nearbyPlaces];
+          updated[index].name = e.target.value;
+          setNearbyPlaces(updated);
+        }}
+        className="input w-full"
+      />
+
+      <input
+        type="text"
+        placeholder="Distance (e.g. 5 km)"
+        value={place.distance}
+        onChange={(e) => {
+          const updated = [...nearbyPlaces];
+          updated[index].distance = e.target.value;
+          setNearbyPlaces(updated);
+        }}
+        className="input w-full"
+      />
+
+      <input
+        type="text"
+        placeholder="Best Route (e.g. via XYZ Road)"
+        value={place.bestRoute}
+        onChange={(e) => {
+          const updated = [...nearbyPlaces];
+          updated[index].bestRoute = e.target.value;
+          setNearbyPlaces(updated);
+        }}
+        className="input w-full"
+      />
+
+      <button
+        type="button"
+        onClick={() =>
+          setNearbyPlaces(nearbyPlaces.filter((_, i) => i !== index))
+        }
+        className="text-red-600 text-sm"
+      >
+        Remove
+      </button>
+    </div>
+  ))}
+
+  <button
+    type="button"
+    onClick={() =>
+      setNearbyPlaces([
+        ...nearbyPlaces,
+        { name: "", distance: "", bestRoute: "" },
+      ])
+    }
+    className="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300"
+  >
+    + Add Nearby Place
+  </button>
+</div>
+{/* ⚠️ Warnings & Tips */}
+<div className="mt-10">
+  <h3 className="text-xl font-bold mb-4 text-red-600">
+    ⚠️ Warnings & Tips (Very Important)
+  </h3>
+
+  {/* Common Mistakes */}
+  <textarea
+    rows="2"
+    placeholder="Common mistakes people make"
+    value={warnings.commonMistakes}
+    onChange={(e) =>
+      setWarnings({ ...warnings, commonMistakes: e.target.value })
+    }
+    className="input mb-3"
+  />
+
+  {/* Crowd Timing */}
+  <textarea
+    rows="2"
+    placeholder="Crowd timing (when to avoid / best time)"
+    value={warnings.crowdTiming}
+    onChange={(e) =>
+      setWarnings({ ...warnings, crowdTiming: e.target.value })
+    }
+    className="input mb-3"
+  />
+
+  {/* Weather Issues */}
+  <textarea
+    rows="2"
+    placeholder="Weather issues to be careful about"
+    value={warnings.weatherIssues}
+    onChange={(e) =>
+      setWarnings({ ...warnings, weatherIssues: e.target.value })
+    }
+    className="input mb-3"
+  />
+
+  {/* Hidden Charges / Scams */}
+  <textarea
+    rows="2"
+    placeholder="Hidden charges / scams to avoid"
+    value={warnings.hiddenCharges}
+    onChange={(e) =>
+      setWarnings({ ...warnings, hiddenCharges: e.target.value })
+    }
+    className="input"
+  />
+</div>
+{/* 🧠 Personal Experience */}
+<div className="mt-10">
+  <h3 className="text-xl font-bold mb-4">
+    🧠 My Personal Experience
+  </h3>
+
+  <textarea
+    rows="5"
+    placeholder="Write your personal experience in your own words..."
+    value={personalExperience}
+    onChange={(e) => setPersonalExperience(e.target.value)}
+    className="input w-full"
+  />
+
+  <p className="text-sm text-gray-500 mt-2">
+    This helps AI improve and summarize your experience later.
+  </p>
+</div>
 
 
         <button
