@@ -11,6 +11,24 @@ const router = express.Router();
 // ✅ Debug (temporary – you can remove later)
 console.log("OPENAI KEY LOADED:", !!process.env.OPENAI_API_KEY);
 
+
+const cleanEmptyEnums = (obj, enumFields) => {
+  enumFields.forEach((path) => {
+    const keys = path.split(".");
+    let ref = obj;
+
+    for (let i = 0; i < keys.length - 1; i++) {
+      if (!ref[keys[i]]) return;
+      ref = ref[keys[i]];
+    }
+
+    const lastKey = keys[keys.length - 1];
+    if (ref[lastKey] === "") {
+      delete ref[lastKey];
+    }
+  });
+};
+
 // --------------------
 // ADD NOTE (FIXED)
 // --------------------
@@ -22,7 +40,7 @@ router.post("/", authMiddleware, async (req, res) => {
       return res.status(400).json({ message: "Place data missing" });
     }
 
-    // ✅ Normalize place object (VERY IMPORTANT)
+    // ✅ Normalize place
     const normalizedPlace = {
       name:
         basicInfo.place.name ||
@@ -37,30 +55,29 @@ router.post("/", authMiddleware, async (req, res) => {
       source: basicInfo.place.source || "openstreetmap",
     };
 
+    // ✅ FIX ENUM ISSUE HERE
+    cleanEmptyEnums(req.body, [
+      "travelDetails.mode",
+      "stayDetails.bookingType",
+    ]);
+
     const newNote = new Note({
       basicInfo: {
         ...basicInfo,
         place: normalizedPlace,
       },
       ...rest,
-      user: req.userId, // ✅ guaranteed
+      user: req.userId,
     });
 
     const savedNote = await newNote.save();
     res.status(201).json(savedNote);
   } catch (error) {
-    console.error("❌ ADD NOTE FULL ERROR ↓↓↓");
-    console.error(error);
-    console.error("❌ ERROR MESSAGE:", error.message);
-    console.error("❌ ERROR NAME:", error.name);
-    console.error("❌ ERROR STACK:", error.stack);
-  
-    res.status(500).json({
-      message: error.message,
-      errorName: error.name,
-    });
+    console.error("ADD NOTE ERROR:", error);
+    res.status(500).json({ message: error.message });
   }
 });
+
 
 
 // --------------------
