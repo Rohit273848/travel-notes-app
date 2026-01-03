@@ -22,6 +22,30 @@ const AddNote = () => {
     duration: "",
     approxCost: "",
   });
+  const [stayDetails, setStayDetails] = useState({
+    hotelName: "",
+    priceRange: "",
+    bookingType: "",
+    cleanlinessRating: 3,
+    locationAdvantage: "",
+  });
+  const [foodDetails, setFoodDetails] = useState({
+    mustTryFood: [],
+    foodPriceRange: "",
+    bestTimeToEat: "",
+    localSpecialDish: "",
+  });
+  const [nearbyPlaces, setNearbyPlaces] = useState([
+    // { name: "", distance: "", bestRoute: "" }
+  ]);
+  const [warnings, setWarnings] = useState({
+    commonMistakes: "",
+    crowdTiming: "",
+    weatherIssues: "",
+    hiddenCharges: "",
+  });
+  const [personalExperience, setPersonalExperience] = useState("");
+
 
   /* 🔐 AUTH CHECK */
   useEffect(() => {
@@ -42,8 +66,16 @@ const AddNote = () => {
     }
 
     const noteData = {
-      basicInfo,
+      basicInfo: {
+        placeName,
+        visibility,
+      },
       travelDetails,
+      stayDetails,
+      foodDetails,
+      nearbyPlaces,
+      warnings,
+      personalExperience,
       noteText: details,
     };
     
@@ -165,86 +197,155 @@ const AddNote = () => {
         </div>
 
         {/* 🅱️ Travel Details */}
-<div className="mt-8">
-  <h3 className="text-xl font-bold mb-4">Travel Details</h3>
+        <div className="mt-8">
+          <h3 className="text-xl font-bold mb-4">Travel Details</h3>
 
-  {/* Mode of Travel */}
-  <select
-    value={travelDetails.mode}
-    onChange={(e) =>
-      setTravelDetails({ ...travelDetails, mode: e.target.value })
-    }
-    className="input mb-3"
-  >
-    <option value="">Select Mode of Travel</option>
-    <option value="train">Train</option>
-    <option value="bus">Bus</option>
-    <option value="car">Car</option>
-    <option value="bike">Bike</option>
-    <option value="flight">Flight</option>
-  </select>
+          {/* Mode of Travel */}
+          <select
+            value={travelDetails.mode}
+            onChange={(e) =>
+              setTravelDetails({ ...travelDetails, mode: e.target.value })
+            }
+            className="input mb-3"
+          >
+            <option value="">Select Mode of Travel</option>
+            <option value="train">Train</option>
+            <option value="bus">Bus</option>
+            <option value="car">Car</option>
+            <option value="bike">Bike</option>
+            <option value="flight">Flight</option>
+          </select>
 
-  {/* Train / Bus Number (conditional but simple for now) */}
-  <input
-    type="text"
-    placeholder="Train / Bus Number (optional)"
-    value={travelDetails.trainOrBusNumber}
-    onChange={(e) =>
-      setTravelDetails({
-        ...travelDetails,
-        trainOrBusNumber: e.target.value,
-      })
-    }
-    className="input mb-3"
-  />
+          {/* Train / Bus Number (conditional but simple for now) */}
+          <input
+            type="text"
+            placeholder="Train / Bus Number (optional)"
+            value={travelDetails.trainOrBusNumber}
+            onChange={(e) =>
+              setTravelDetails({
+                ...travelDetails,
+                trainOrBusNumber: e.target.value,
+              })
+            }
+            className="input mb-3"
+          />
 
-  {/* From */}
-  <input
-    type="text"
-    placeholder="From (Departure location)"
-    value={travelDetails.from}
-    onChange={(e) =>
-      setTravelDetails({ ...travelDetails, from: e.target.value })
-    }
-    className="input mb-3"
-  />
+          {/* From */}
+          <input
+            type="text"
+            placeholder="From (Departure location)"
+            value={travelDetails.from}
+            onChange={(e) =>
+              setTravelDetails({ ...travelDetails, from: e.target.value })
+            }
+            className="input mb-3"
+          />
 
-  {/* To */}
-  <input
-    type="text"
-    placeholder="To (Arrival location)"
-    value={travelDetails.to}
-    onChange={(e) =>
-      setTravelDetails({ ...travelDetails, to: e.target.value })
-    }
-    className="input mb-3"
-  />
+          {/* To */}
+          <input
+            type="text"
+            placeholder="To (Arrival location)"
+            value={travelDetails.to}
+            onChange={(e) =>
+              setTravelDetails({ ...travelDetails, to: e.target.value })
+            }
+            className="input mb-3"
+          />
 
-  {/* Duration */}
-  <input
-    type="text"
-    placeholder="Travel Duration (e.g. 6 hours)"
-    value={travelDetails.duration}
-    onChange={(e) =>
-      setTravelDetails({ ...travelDetails, duration: e.target.value })
-    }
-    className="input mb-3"
-  />
+          {/* Duration */}
+          <input
+            type="text"
+            placeholder="Travel Duration (e.g. 6 hours)"
+            value={travelDetails.duration}
+            onChange={(e) =>
+              setTravelDetails({ ...travelDetails, duration: e.target.value })
+            }
+            className="input mb-3"
+          />
 
-  {/* Approx Cost */}
-  <input
-    type="number"
-    placeholder="Approx Cost (₹)"
-    value={travelDetails.approxCost}
-    onChange={(e) =>
-      setTravelDetails({
-        ...travelDetails,
-        approxCost: e.target.value,
-      })
-    }
-    className="input"
-  />
-</div>
+          {/* Approx Cost */}
+          <input
+            type="number"
+            placeholder="Approx Cost (₹)"
+            value={travelDetails.approxCost}
+            onChange={(e) =>
+              setTravelDetails({
+                ...travelDetails,
+                approxCost: e.target.value,
+              })
+            }
+            className="input"
+          />
+        </div>
+        {/* 🅲 Stay Details */}
+        <div className="mt-10">
+          <h3 className="text-xl font-bold mb-4">Stay Details</h3>
+
+          {/* Hotel / Lodge Name */}
+          <input
+            type="text"
+            placeholder="Hotel / Lodge Name"
+            value={stayDetails.hotelName}
+            onChange={(e) =>
+              setStayDetails({ ...stayDetails, hotelName: e.target.value })
+            }
+            className="input mb-3"
+          />
+
+          {/* Price Range */}
+          <input
+            type="text"
+            placeholder="Price Range (e.g. ₹800–₹1200)"
+            value={stayDetails.priceRange}
+            onChange={(e) =>
+              setStayDetails({ ...stayDetails, priceRange: e.target.value })
+            }
+            className="input mb-3"
+          />
+
+          {/* Booking Type */}
+          <select
+            value={stayDetails.bookingType}
+            onChange={(e) =>
+              setStayDetails({ ...stayDetails, bookingType: e.target.value })
+            }
+            className="input mb-3"
+          >
+            <option value="">Booking Type</option>
+            <option value="online">Online</option>
+            <option value="offline">Offline</option>
+          </select>
+
+          {/* Cleanliness Rating */}
+          <input
+            type="number"
+            min="1"
+            max="5"
+            placeholder="Cleanliness Rating (1–5)"
+            value={stayDetails.cleanlinessRating}
+            onChange={(e) =>
+              setStayDetails({
+                ...stayDetails,
+                cleanlinessRating: Number(e.target.value),
+              })
+            }
+            className="input mb-3"
+          />
+
+          {/* Location Advantage */}
+          <textarea
+            rows="2"
+            placeholder="Location Advantage (e.g. near temple / beach / station)"
+            value={stayDetails.locationAdvantage}
+            onChange={(e) =>
+              setStayDetails({
+                ...stayDetails,
+                locationAdvantage: e.target.value,
+              })
+            }
+            className="input"
+          />
+        </div>
 
 
         <button

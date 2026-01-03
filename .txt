@@ -1,7 +1,10 @@
-1️⃣ I want React autocomplete code
-2️⃣ I want OpenStreetMap implementation
-3️⃣ I want Google Maps implementation
-4️⃣ I want AI + location intelligence ideas
+Update My Notes page
+
+Update Public Notes page
+
+Decide what to show + how to show
+
+Design clean read-only cards (not raw JSON)
 
 4️⃣ Logout Polish
 Clear token

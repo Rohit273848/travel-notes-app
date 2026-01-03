@@ -52,16 +52,49 @@ const noteSchema = new mongoose.Schema(
 
     stayDetails: {
       hotelName: String,
-      priceRange: String,
+    
+      priceRange: {
+        type: String, // e.g. "₹500–₹1000", "₹2000+"
+      },
+    
       bookingType: {
         type: String,
         enum: ["online", "offline"],
       },
-      cleanlinessRating: Number,
-      locationAdvantage: String,
+    
+      cleanlinessRating: {
+        type: Number,
+        min: 1,
+        max: 5,
+      },
+    
+      locationAdvantage: String, // short text
     },
-
-    noteText: String,
+    
+    foodDetails: {
+      mustTryFood: [String],      // array
+      foodPriceRange: String,
+      bestTimeToEat: String,
+      localSpecialDish: String,
+    },
+    nearbyPlaces: [
+      {
+        name: String,
+        distance: String,   // e.g. "3 km"
+        bestRoute: String,
+      },
+    ],
+    warnings: {
+      commonMistakes: String,
+      crowdTiming: String,
+      weatherIssues: String,
+      hiddenCharges: String,
+    },
+        
+    personalExperience: {
+      type: String,
+    },
+    
 
     user: {
       type: mongoose.Schema.Types.ObjectId,
