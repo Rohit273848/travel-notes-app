@@ -12,21 +12,48 @@ const router = express.Router();
 console.log("OPENAI KEY LOADED:", !!process.env.OPENAI_API_KEY);
 
 // --------------------
-// ADD NOTE
+// ADD NOTE (FIXED)
 // --------------------
 router.post("/", authMiddleware, async (req, res) => {
   try {
+    const { basicInfo, ...rest } = req.body;
+
+    if (!basicInfo?.place) {
+      return res.status(400).json({ message: "Place data missing" });
+    }
+
+    // ✅ Normalize place object (VERY IMPORTANT)
+    const normalizedPlace = {
+      name:
+        basicInfo.place.name ||
+        basicInfo.place.display_name ||
+        "Unknown Place",
+      city: basicInfo.place.city || basicInfo.place.address?.city || "",
+      state: basicInfo.place.state || basicInfo.place.address?.state || "",
+      country:
+        basicInfo.place.country || basicInfo.place.address?.country || "",
+      lat: Number(basicInfo.place.lat),
+      lng: Number(basicInfo.place.lng || basicInfo.place.lon),
+      source: basicInfo.place.source || "openstreetmap",
+    };
+
     const newNote = new Note({
-      ...req.body,
-      user: req.userId || null,
+      basicInfo: {
+        ...basicInfo,
+        place: normalizedPlace,
+      },
+      ...rest,
+      user: req.userId, // ✅ guaranteed
     });
 
     const savedNote = await newNote.save();
     res.status(201).json(savedNote);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("ADD NOTE ERROR:", error);
+    res.status(500).json({ message: "Failed to save note" });
   }
 });
+
 
 // --------------------
 // FETCH PUBLIC NOTES
