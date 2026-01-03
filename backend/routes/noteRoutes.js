@@ -49,8 +49,16 @@ router.post("/", authMiddleware, async (req, res) => {
     const savedNote = await newNote.save();
     res.status(201).json(savedNote);
   } catch (error) {
-    console.error("ADD NOTE ERROR:", error);
-    res.status(500).json({ message: "Failed to save note" });
+    console.error("❌ ADD NOTE FULL ERROR ↓↓↓");
+    console.error(error);
+    console.error("❌ ERROR MESSAGE:", error.message);
+    console.error("❌ ERROR NAME:", error.name);
+    console.error("❌ ERROR STACK:", error.stack);
+  
+    res.status(500).json({
+      message: error.message,
+      errorName: error.name,
+    });
   }
 });
 
