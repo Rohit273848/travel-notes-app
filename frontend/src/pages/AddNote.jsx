@@ -54,6 +54,14 @@ const AddNote = () => {
     const token = localStorage.getItem("token");
   
     try {
+      console.log("Sending payload:", {
+        placeName: basicInfo.place,
+        visitType: basicInfo.visitType,
+        visibility: basicInfo.visibility,
+        rating: basicInfo.rating,
+        travelDetails,
+        stayDetails,
+      });
       const res = await fetch(
         "https://travel-notes-app.onrender.com/api/notes",
         {
@@ -64,15 +72,33 @@ const AddNote = () => {
           },
           body: JSON.stringify({
             placeName: basicInfo.place,
-            basicInfo,
-            travelDetails,
-            stayDetails,
+            visitType: basicInfo.visitType,
+            visibility: basicInfo.visibility,
+            rating: basicInfo.rating,
+          
+            travelDetails: {
+              mode: travelDetails.mode,
+              trainOrBusNumber: travelDetails.trainOrBusNumber,
+              from: travelDetails.from,
+              to: travelDetails.to,
+              duration: travelDetails.duration,
+              approxCost: travelDetails.approxCost,
+            },
+          
+            stayDetails: {
+              hotelName: stayDetails.hotelName,
+              priceRange: stayDetails.priceRange,
+              bookingType: stayDetails.bookingType,
+              cleanlinessRating: stayDetails.cleanlinessRating,
+              locationAdvantage: stayDetails.locationAdvantage,
+            },
+          
             foodDetails,
             nearbyPlaces,
             warnings,
             personalExperience,
             noteText: details,
-          }),
+          }),          
         }
       );
   
