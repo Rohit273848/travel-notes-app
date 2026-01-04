@@ -570,9 +570,12 @@ const AddNote = () => {
                         placeholder="Place Name"
                         value={place.name}
                         onChange={(e) => {
-                          const updated = [...nearbyPlaces];
-                          updated[index].name = e.target.value;
-                          setNearbyPlaces(updated);
+                          setNearbyPlaces((prev) =>
+                            prev.map((place, i) =>
+                              i === index ? { ...place, name: e.target.value } : place
+                            )
+                          );
+                          
                         }}
                         className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition-all duration-200"
                       />
@@ -581,9 +584,11 @@ const AddNote = () => {
                         placeholder="Distance (e.g. 5 km)"
                         value={place.distance}
                         onChange={(e) => {
-                          const updated = [...nearbyPlaces];
-                          updated[index].distance = e.target.value;
-                          setNearbyPlaces(updated);
+                          setNearbyPlaces((prev) =>
+                            prev.map((place, i) =>
+                              i === index ? { ...place, distance: e.target.value } : place
+                            )
+                          );
                         }}
                         className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition-all duration-200"
                       />
@@ -592,9 +597,11 @@ const AddNote = () => {
                         placeholder="Best Route"
                         value={place.bestRoute}
                         onChange={(e) => {
-                          const updated = [...nearbyPlaces];
-                          updated[index].bestRoute = e.target.value;
-                          setNearbyPlaces(updated);
+                          setNearbyPlaces((prev) =>
+                            prev.map((place, i) =>
+                              i === index ? { ...place, bestRoute: e.target.value } : place
+                            )
+                          );
                         }}
                         className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition-all duration-200"
                       />
