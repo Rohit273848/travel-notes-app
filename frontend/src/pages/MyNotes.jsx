@@ -10,14 +10,14 @@ const MyNotes = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-  
+
     if (!token) {
       alert("Please login first");
       setLoading(false);
       navigate("/login");
       return;
     }
-  
+
     const fetchMyNotes = async () => {
       try {
         const res = await fetch(
@@ -28,7 +28,7 @@ const MyNotes = () => {
             },
           }
         );
-  
+
         const data = await res.json();
         setNotes(Array.isArray(data) ? data : []);
       } catch (err) {
@@ -38,15 +38,15 @@ const MyNotes = () => {
         setLoading(false);
       }
     };
-  
+
     fetchMyNotes();
   }, [navigate]);
-  
+
 
   const handleEdit = (note) => {
     navigate(`/edit-note/${note._id}`, { state: note });
   };
-  
+
 
   const handleDelete = async (noteId) => {
     const confirmDelete = window.confirm(
@@ -94,7 +94,7 @@ const MyNotes = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-16">
-        
+
         {/* Header Section */}
         <div className="mb-12">
           <div className="flex items-center justify-between flex-wrap gap-4">
@@ -111,14 +111,14 @@ const MyNotes = () => {
                 {notes.length} {notes.length === 1 ? 'note' : 'notes'} saved
               </p>
             </div>
-            
+
             <button
-  onClick={() => navigate("/add-note")}
-  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl hover:from-blue-700 hover:to-indigo-700 transform hover:-translate-y-0.5 transition-all duration-200"
->
-  <Plus className="w-5 h-5" />
-  Add New Note
-</button>
+              onClick={() => navigate("/add-note")}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl hover:from-blue-700 hover:to-indigo-700 transform hover:-translate-y-0.5 transition-all duration-200"
+            >
+              <Plus className="w-5 h-5" />
+              Add New Note
+            </button>
           </div>
         </div>
 
@@ -133,12 +133,12 @@ const MyNotes = () => {
               Start documenting your travel experiences and memories
             </p>
             <button
-  onClick={() => navigate("/add-note")}
-  className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl hover:from-blue-700 hover:to-indigo-700 transform hover:-translate-y-0.5 transition-all duration-200"
->
-  <Plus className="w-5 h-5" />
-  Create Your First Note
-</button>
+              onClick={() => navigate("/add-note")}
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl hover:from-blue-700 hover:to-indigo-700 transform hover:-translate-y-0.5 transition-all duration-200"
+            >
+              <Plus className="w-5 h-5" />
+              Create Your First Note
+            </button>
 
           </div>
         ) : (
@@ -156,16 +156,32 @@ const MyNotes = () => {
                       <MapPin className="w-5 h-5 text-white" />
                     </div>
                     <h2 className="font-bold text-xl text-white truncate flex-1">
-                      {note.placeName}
+                      {note.basicInfo?.place?.name || "Unknown Place"}
                     </h2>
+
                   </div>
                 </div>
 
                 {/* Card Content */}
                 <div className="p-6">
-                  <p className="text-gray-700 leading-relaxed whitespace-pre-line line-clamp-6 mb-6">
-                    {note.noteText}
+                  <p className="text-sm text-gray-500 mb-2">
+                    📍 {note.basicInfo?.place?.city}
+                    {note.basicInfo?.place?.state ? `, ${note.basicInfo.place.state}` : ""}
+                    {note.basicInfo?.place?.country ? `, ${note.basicInfo.place.country}` : ""}
                   </p>
+
+                  <p className="text-gray-700 leading-relaxed whitespace-pre-line line-clamp-5 mb-4">
+                    {note.noteText || "No additional notes provided."}
+                  </p>
+
+                  <div className="flex items-center justify-between text-sm text-gray-600 mb-4">
+                    <span className="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 font-medium">
+                      {note.basicInfo?.visitType}
+                    </span>
+
+                    <span>⭐ {note.basicInfo?.rating || 0}/5</span>
+                  </div>
+
 
                   {/* Action Buttons */}
                   <div className="flex gap-3">
