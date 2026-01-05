@@ -171,8 +171,9 @@ const MyNotes = () => {
                   </p>
 
                   <p className="text-gray-700 leading-relaxed whitespace-pre-line line-clamp-5 mb-4">
-                    {note.noteText || "No additional notes provided."}
+                    {note.personalExperience || "No personal experience added."}
                   </p>
+
 
                   <div className="flex items-center justify-between text-sm text-gray-600 mb-4">
                     <span className="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 font-medium">
