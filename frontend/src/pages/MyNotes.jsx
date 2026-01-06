@@ -187,30 +187,50 @@ const MyNotes = () => {
 
 
                   {/* Action Buttons */}
-                    <div className="flex gap-3">
-                      <button
-                        onClick={() => handleEdit(note)}
-                        className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-blue-50 text-blue-700 font-semibold hover:bg-blue-100 transition-all duration-200 group/edit"
-                      >
-                        <Edit3 className="w-4 h-4 group-hover/edit:rotate-12 transition-transform duration-200" />
-                        Edit
-                      </button>
+                  <div className="flex flex-col gap-3">
+  {/* Action buttons row */}
+  <div className="flex gap-3">
+    <button
+      onClick={() => handleEdit(note)}
+      className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl
+      bg-gradient-to-r from-blue-50 to-blue-100 text-blue-700 font-semibold
+      hover:from-blue-100 hover:to-blue-200
+      shadow-sm hover:shadow-md
+      transition-all duration-200 group"
+    >
+      <Edit3 className="w-4 h-4 group-hover:rotate-12 transition-transform duration-200" />
+      Edit
+    </button>
 
-                      <button
-                        onClick={() => handleDelete(note._id)}
-                        className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-red-50 text-red-700 font-semibold hover:bg-red-100 transition-all duration-200 group/delete"
-                      >
-                        <Trash2 className="w-4 h-4 group-hover/delete:scale-110 transition-transform duration-200" />
-                        Delete
-                      </button>
-                      <button
-                        onClick={() => navigate(`/notes/${note._id}`)}
-                        className="w-full mt-2 inline-flex items-center justify-center px-4 py-2 rounded-xl bg-indigo-50 text-indigo-700 font-semibold hover:bg-indigo-100 transition"
-                      >
-                        View Full Note →
-                      </button>
+    <button
+      onClick={() => handleDelete(note._id)}
+      className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl
+      bg-gradient-to-r from-red-50 to-red-100 text-red-700 font-semibold
+      hover:from-red-100 hover:to-red-200
+      shadow-sm hover:shadow-md
+      transition-all duration-200 group"
+    >
+      <Trash2 className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
+      Delete
+    </button>
+  </div>
 
-                    </div>
+  {/* View full note */}
+  <button
+    onClick={() => navigate(`/notes/${note._id}`)}
+    className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl
+    bg-gradient-to-r from-indigo-50 to-indigo-100 text-indigo-700 font-semibold
+    hover:from-indigo-100 hover:to-indigo-200
+    shadow-sm hover:shadow-md
+    transition-all duration-200 group"
+  >
+    View Full Note
+    <span className="group-hover:translate-x-1 transition-transform duration-200">→</span>
+  </button>
+</div>
+
+
+
                   </div>
 
                 {/* Hover Effect Border */}
