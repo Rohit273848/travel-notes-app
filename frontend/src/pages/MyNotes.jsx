@@ -1,5 +1,5 @@
+import { Edit3, FileText, Loader2, MapPin, Plus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { MapPin, Edit3, Trash2, Loader2, FileText, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 
@@ -188,50 +188,50 @@ const MyNotes = () => {
 
                   {/* Action Buttons */}
                   <div className="flex flex-col gap-3">
-  {/* Action buttons row */}
-  <div className="flex gap-3">
-    <button
-      onClick={() => handleEdit(note)}
-      className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl
+                    {/* Action buttons row */}
+                    <div className="flex gap-3">
+                      <button
+                        onClick={() => handleEdit(note)}
+                        className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl
       bg-gradient-to-r from-blue-50 to-blue-100 text-blue-700 font-semibold
       hover:from-blue-100 hover:to-blue-200
       shadow-sm hover:shadow-md
       transition-all duration-200 group"
-    >
-      <Edit3 className="w-4 h-4 group-hover:rotate-12 transition-transform duration-200" />
-      Edit
-    </button>
+                      >
+                        <Edit3 className="w-4 h-4 group-hover:rotate-12 transition-transform duration-200" />
+                        Edit
+                      </button>
 
-    <button
-      onClick={() => handleDelete(note._id)}
-      className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl
+                      <button
+                        onClick={() => handleDelete(note._id)}
+                        className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl
       bg-gradient-to-r from-red-50 to-red-100 text-red-700 font-semibold
       hover:from-red-100 hover:to-red-200
       shadow-sm hover:shadow-md
       transition-all duration-200 group"
-    >
-      <Trash2 className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
-      Delete
-    </button>
-  </div>
+                      >
+                        <Trash2 className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
+                        Delete
+                      </button>
+                    </div>
 
-  {/* View full note */}
-  <button
-    onClick={() => navigate(`/notes/${note._id}`)}
-    className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl
+                    {/* View full note */}
+                    <button
+                      onClick={() => navigate(`/notes/${note._id}`)}
+                      className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl
     bg-gradient-to-r from-indigo-50 to-indigo-100 text-indigo-700 font-semibold
     hover:from-indigo-100 hover:to-indigo-200
     shadow-sm hover:shadow-md
     transition-all duration-200 group"
-  >
-    View Full Note
-    <span className="group-hover:translate-x-1 transition-transform duration-200">→</span>
-  </button>
-</div>
-
-
-
+                    >
+                      View Full Note
+                      <span className="group-hover:translate-x-1 transition-transform duration-200">→</span>
+                    </button>
                   </div>
+
+
+
+                </div>
 
                 {/* Hover Effect Border */}
                 <div className="h-1 bg-gradient-to-r from-blue-500 to-indigo-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
