@@ -186,6 +186,36 @@ router.get("/my-notes", authMiddleware, async (req, res) => {
   }
 });
 
+
+// --------------------
+// GET SINGLE NOTE (PUBLIC or OWNER)
+// --------------------
+router.get("/:id", authMiddlewareOptional, async (req, res) => {
+  try {
+    const note = await Note.findById(req.params.id);
+
+    if (!note) {
+      return res.status(404).json({ message: "Note not found" });
+    }
+
+    // Allow:
+    // - public notes
+    // - owner viewing personal note
+    if (
+      note.basicInfo.visibility === "personal" &&
+      String(note.user) !== req.userId
+    ) {
+      return res.status(403).json({ message: "This note is private" });
+    }
+
+    res.json(note);
+  } catch (error) {
+    console.error("Single note error:", error);
+    res.status(500).json({ message: "Failed to fetch note" });
+  }
+});
+
+
 // --------------------
 // UPDATE NOTE (Protected)
 // --------------------

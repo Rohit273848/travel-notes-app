@@ -173,7 +173,10 @@ const MyNotes = () => {
                   <p className="text-gray-700 text-sm leading-relaxed line-clamp-3 mb-4">
                     {note.personalExperience
                       ? note.personalExperience.slice(0, 120) + "..."
-                      : "No personal experience added."}
+                      : note.noteText
+                        ? note.noteText.slice(0, 120) + "..."
+                        : "No details added."}
+
                   </p>
 
 
