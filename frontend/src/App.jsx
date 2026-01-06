@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import MyNotes from "./pages/MyNotes";
 import EditNote from "./pages/EditNote";
+import NoteDetails from "./pages/NoteDetails";
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/my-notes" element={<MyNotes />} />
         <Route path="/edit-note/:id" element={<EditNote />} />
-
+        <Route path="/notes/:id" element={<NoteDetails />} />
       </Routes>
     </>
   );
